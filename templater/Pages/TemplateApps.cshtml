@@ -1,0 +1,20 @@
+﻿@page
+@model TemplateAppsModel
+@{
+    ViewData["Title"] = "Приложения";
+}
+
+<h6 class="display-6">Приложения</h6>
+<div>
+    <button type="button" class="btn addButton"></button>
+
+    @foreach (var app in @Model.TemplateApps)
+    {
+        <a href="/TemplateApp/@app.Id">
+            <div class="templateApp">
+                <img class="templateApp-img" src="/img/app.svg">
+                <span class="templateApp-title">@app.Name</span>
+            </div>
+        </a>
+    }
+</div>

@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0 !important;
+    text-decoration: none;
+}
+
+html {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.addButton {
+    width: 56px;
+    height: 56px;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    border-radius: 28px;
+    background-color: #28a745;
+    z-index: 100;
+}
+
+.addButton:before {
+    content: '+';
+    color: white;
+    font-size: 36px;
+    font-weight: 600;
+    position: absolute;
+    left: 14px;
+    top: -4px;
+}
+
+.addButton img {
+    stroke: yellow;
+    fill: blue;
+    padding: 16px;
+}
+
+/* Приложения */
+.templateApp {
+    cursor: pointer;
+    display: inline-block;
+    width: 120px;
+    margin: 5px;
+    padding: 5px;
+}
+
+    .templateApp .add-border {
+        margin: -2px;
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+    }
+
+    .templateApp:hover {
+        background: #eee;
+    }
+
+.templateApp-title {
+    display: block;
+    color: #333;
+    font-size: 14px;
+    line-height: 20px;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-align: center;
+}
+
+.templateApp-img {
+    display: block;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+}
+
+
+/* Шаблоны */
+.templatesTable {
+    width: 100%;
+}
+
+    .templatesTable tbody {
+        cursor: pointer;
+    }
+
+        .templatesTable tbody tr:hover {
+            background: #eee;
+        }
+
+        .templatesTable tbody tr:nth-child(2n) {
+            background: #f8f8f8;
+        }
+
+            .templatesTable tbody tr:nth-child(2n):hover {
+                background: #eee;
+            }
+
+    .templatesTable td, th {
+        padding: 10px 15px;
+    }
+
+    .templatesTable th {
+        font-weight: 600;
+        background: #eef;
+    }
+
+.template-img {
+    width: 32px;
+    height: 32px;
+}

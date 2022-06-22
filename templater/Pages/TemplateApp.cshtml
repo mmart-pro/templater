@@ -1,0 +1,41 @@
+﻿@page "{TemplateAppId}"
+@model TemplateAppModel
+@{
+    ViewData["Title"] = "Шаблоны приложения";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/TemplateApps">Приложения</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.TemplateApp.Name</li>
+    </ol>
+</nav>
+
+<h6 class="display-6">Шаблоны</h6>
+<div>
+    <button type="button" class="btn addButton"></button>
+
+    <table class="templatesTable">
+        <thead>
+            <tr>
+                <th>Формат</th>
+                <th>Идентификатор</th>
+                <th>Создан</th>
+                <th>Изменён</th>
+                <th>Использован</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in @Model.Templates)
+            {
+                <tr onclick="window.location.href='/Template/@template.Id'; return false">
+                    <td><img class="template-img" src="/img/@(template.ImageName).svg"></td>
+                    <td><div class="template-id">@template.Id</div></td>
+                    <td><div class="template-time">@template.CreateTimeStamp</div></td>
+                    <td><div class="template-time">@template.TimeStamp</div></td>
+                    <td><div class="template-time">@template.LastUsedDateTime</div></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

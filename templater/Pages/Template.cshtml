@@ -1,0 +1,15 @@
+﻿@page "{TemplateId}"
+@model TemplateModel
+@{
+    ViewData["Title"] = "Шаблон";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/TemplateApps">Приложения</a></li>
+        <li class="breadcrumb-item"><a href="/TemplateApp/@Model.Template.TemplateAppId">@Model.Template.TemplateApp.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Template.Id</li>
+    </ol>
+</nav>
+
+<h6 class="display-6">Шаблон</h6>
