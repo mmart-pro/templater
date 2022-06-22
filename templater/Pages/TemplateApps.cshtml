@@ -4,9 +4,11 @@
     ViewData["Title"] = "Приложения";
 }
 
-<h6 class="display-6">Приложения</h6>
+<h5>Приложения</h5>
 <div>
-    <button type="button" class="btn addButton"></button>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    </div>
 
     @foreach (var app in @Model.TemplateApps)
     {

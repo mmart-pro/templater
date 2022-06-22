@@ -4,12 +4,12 @@
     ViewData["Title"] = "Шаблон";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/TemplateApps">Приложения</a></li>
-        <li class="breadcrumb-item"><a href="/TemplateApp/@Model.Template.TemplateAppId">@Model.Template.TemplateApp.Name</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.Template.Id</li>
-    </ol>
-</nav>
+<div class="breadcrumbs col s12">
+    <a href="/TemplateApps">Приложения</a>
+    <span>&#62;</span>
+    <a href="/TemplateApp/@Model.Template.TemplateAppId">@Model.Template.TemplateApp.Name</a>
+    <span>&#62;</span>
+    <span>@Model.Template.Id</span>
+</div>
 
-<h6 class="display-6">Шаблон</h6>
+<h5>Шаблон</h5>

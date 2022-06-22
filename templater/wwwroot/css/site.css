@@ -1,54 +1,16 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    outline: 0 !important;
-    text-decoration: none;
-}
-
-html {
-    font-size: 16px;
-    font-weight: 400;
-}
-
-a {
-    text-decoration: none;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
-    margin-bottom: 60px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-size: 16px;
 }
 
-.addButton {
-    width: 56px;
-    height: 56px;
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    border-radius: 28px;
-    background-color: #28a745;
-    z-index: 100;
+main {
+    flex: 1 0 auto;
 }
 
-.addButton:before {
-    content: '+';
-    color: white;
-    font-size: 36px;
-    font-weight: 600;
-    position: absolute;
-    left: 14px;
-    top: -4px;
-}
-
-.addButton img {
-    stroke: yellow;
-    fill: blue;
-    padding: 16px;
+.breadcrumbs {
+    padding: 10px 0;
 }
 
 /* Приложения */
@@ -73,7 +35,6 @@ body {
 .templateApp-title {
     display: block;
     color: #333;
-    font-size: 14px;
     line-height: 20px;
     height: 40px;
     overflow: hidden;
@@ -90,37 +51,6 @@ body {
     height: 96px;
     margin: 0 auto;
 }
-
-
-/* Шаблоны */
-.templatesTable {
-    width: 100%;
-}
-
-    .templatesTable tbody {
-        cursor: pointer;
-    }
-
-        .templatesTable tbody tr:hover {
-            background: #eee;
-        }
-
-        .templatesTable tbody tr:nth-child(2n) {
-            background: #f8f8f8;
-        }
-
-            .templatesTable tbody tr:nth-child(2n):hover {
-                background: #eee;
-            }
-
-    .templatesTable td, th {
-        padding: 10px 15px;
-    }
-
-    .templatesTable th {
-        font-weight: 600;
-        background: #eef;
-    }
 
 .template-img {
     width: 32px;

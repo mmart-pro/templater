@@ -4,18 +4,19 @@
     ViewData["Title"] = "Шаблоны приложения";
 }
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/TemplateApps">Приложения</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.TemplateApp.Name</li>
-    </ol>
-</nav>
+<div class="breadcrumbs col s12">
+    <a href="/TemplateApps">Приложения</a>
+    <span>&#62;</span>
+    <span>@Model.TemplateApp.Name</span>
+</div>
 
-<h6 class="display-6">Шаблоны</h6>
+<h5>Шаблоны приложения</h5>
 <div>
-    <button type="button" class="btn addButton"></button>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+    </div>
 
-    <table class="templatesTable">
+    <table class="highlight centered">
         <thead>
             <tr>
                 <th>Формат</th>
@@ -28,12 +29,12 @@
         <tbody>
             @foreach (var template in @Model.Templates)
             {
-                <tr onclick="window.location.href='/Template/@template.Id'; return false">
+                <tr onclick="window.location.href='/Template/@template.Id'; return false" style="cursor: pointer;">
                     <td><img class="template-img" src="/img/@(template.ImageName).svg"></td>
-                    <td><div class="template-id">@template.Id</div></td>
-                    <td><div class="template-time">@template.CreateTimeStamp</div></td>
-                    <td><div class="template-time">@template.TimeStamp</div></td>
-                    <td><div class="template-time">@template.LastUsedDateTime</div></td>
+                    <td><div class="left-align">@template.Id</div></td>
+                    <td><div>@template.CreateTimeStamp</div></td>
+                    <td><div>@template.TimeStamp</div></td>
+                    <td><div>@template.LastUsedDateTime</div></td>
                 </tr>
             }
         </tbody>

@@ -4,43 +4,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - templater</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/lib/materialize/css/materialize.min.css" media="screen,projection" />
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/templater.styles.css" asp-append-version="true" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/TemplateApps/Index">Приложения и шаблоны</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/swagger">Api</a>
-                        </li>
-                    </ul>
-                </div>
+        <nav class="light-green" role="navigation">
+            <div class="nav-wrapper container">
+                <a href="/" class="brand-logo">Templater</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/swagger">Api</a></li>
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <main>
         <div class="container">
-            &copy; 2022 - <a href="mailto:mmart@inbox.ru">Михаил Мартынов</a>, <a href="github" target="_blank">Project repository</a>
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="page-footer light-green" style="padding-top: 0;">
+        <div class="footer-copyright">
+            <div class="container">
+                <span>&copy; 2022</span> - <a class="grey-text text-lighten-4" href="mailto:mmart@inbox.ru">Михаил Мартынов</a>
+                <a class="grey-text text-lighten-4 right" href="#!" target="_blank">Project home</a>
+            </div>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/materialize/js/materialize.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+@*<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
