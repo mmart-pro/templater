@@ -9,7 +9,6 @@ namespace templater.Pages.Templates;
 
 public class EditModel : PageModel
 {
-    private readonly ILogger<EditModel> _logger;
     private readonly Context _context;
 
     /// <summary>
@@ -43,11 +42,9 @@ public class EditModel : PageModel
     public List<IFormFile> TemplateFile { get; set; }
 
     public EditModel(
-        ILogger<EditModel> logger,
         Context context
         )
     {
-        _logger = logger;
         _context = context;
     }
 

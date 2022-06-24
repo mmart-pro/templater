@@ -11,7 +11,6 @@ namespace templater.Classes
     public class Filler
     {
         private readonly Context _context;
-        private readonly AppSettings _appSettings;
         private readonly ILogger<Filler> _logger;
         private readonly XlsxFiller _xlsxFiller;
         private readonly DocxFiller _docxFiller;
@@ -43,7 +42,6 @@ namespace templater.Classes
             )
         {
             _context = context;
-            _appSettings = appSettings.Value;
             _logger = logger;
             _xlsxFiller = xlsxFiller;
             _docxFiller = docxFiller;

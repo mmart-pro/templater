@@ -8,7 +8,6 @@ namespace templater.Pages.Templates;
 
 public class CreateModel : PageModel
 {
-    private readonly ILogger<CreateModel> _logger;
     private readonly Context _context;
 
     /// <summary>
@@ -38,11 +37,9 @@ public class CreateModel : PageModel
     public List<IFormFile> TemplateFile { get; set; }
 
     public CreateModel(
-        ILogger<CreateModel> logger,
         Context context
         )
     {
-        _logger = logger;
         _context = context;
     }
 
