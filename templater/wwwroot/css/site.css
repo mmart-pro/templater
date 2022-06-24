@@ -45,6 +45,19 @@ main {
     text-align: center;
 }
 
+.templateApp-ref {
+    display: block;
+    color: #333;
+    line-height: 20px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-align: center;
+}
+
 .templateApp-img {
     display: block;
     width: 96px;

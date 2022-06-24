@@ -7,7 +7,7 @@ TemplaterRequest r = new TemplaterRequest(OutputFormats.PDF, zip: false)
 {
     Templates = new Template[]
     {
-        new Template(applicationId: "xxx", templateId: "mx1")
+        new Template(appApiRef: "xxx", templateId: "mx1")
         {
             Replacements = new[]
             {

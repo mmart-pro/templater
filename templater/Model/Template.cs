@@ -5,25 +5,50 @@ namespace templater.Model;
 
 public class Template
 {
-    [MaxLength(32)]
-    public string TemplateAppId { get; set; }
+    /// <summary>
+    /// Уникальный Id в БД для роутов
+    /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    /// <summary>
+    /// Идентификатор приложения
+    /// </summary>
+    [MaxLength(16)]
+    public int TemplateAppId { get; set; }
 
     public TemplateApp TemplateApp { get; set; }
 
-    [MaxLength(32)]
-    public string Id { get; set; }
+    /// <summary>
+    /// Имя шаблона для обращения через Api
+    /// должно быть уникальным в пределах приложения
+    /// по сути это имя файла
+    /// </summary>
+    [MaxLength(16)]
+    public string ApiRef { get; set; }
 
-    public DateTime? CreateTimeStamp { get; set; }
+    /// <summary>
+    /// Данные шаблона
+    /// </summary>
+    public byte[] Data { get; set; }
 
-    public DateTime? TimeStamp { get; set; }
+    /// <summary>
+    /// Идентификатор формата
+    /// </summary>
+    public int TemplateFormatId { get; set; }
 
+    /// <summary>
+    /// Формат файла и его content-type
+    /// </summary>
+    public TemplateFormat TemplateFormat { get; set; }
+
+    public DateTime CreateTimeStamp { get; set; }
+
+    public DateTime TimeStamp { get; set; }
+
+    /// <summary>
+    /// Дата и время последнего использования
+    /// </summary>
     public DateTime? LastUsedDateTime { get; set; }
-
-    [NotMapped]
-    public string ImageName =>
-        Id.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase)
-        ? "excel"
-        : Id.EndsWith("docx", StringComparison.OrdinalIgnoreCase)
-        ? "word"
-        : "document-exclamation";
 }

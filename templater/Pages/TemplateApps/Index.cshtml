@@ -1,5 +1,5 @@
 ﻿@page
-@model TemplateAppsModel
+@model IndexModel
 @{
     ViewData["Title"] = "Приложения";
 }
@@ -7,14 +7,15 @@
 <h5>Приложения</h5>
 <div>
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light orange" asp-page="Create"><i class="material-icons">add</i></a>
     </div>
 
     @foreach (var app in @Model.TemplateApps)
     {
-        <a href="/TemplateApp/@app.Id">
+        <a asp-page="Edit" asp-route-templateAppId="@app.Id">
             <div class="templateApp">
                 <img class="templateApp-img" src="/img/app.svg">
+                <span class="templateApp-ref">[@app.ApiRef]</span>
                 <span class="templateApp-title">@app.Name</span>
             </div>
         </a>

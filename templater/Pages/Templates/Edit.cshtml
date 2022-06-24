@@ -1,0 +1,49 @@
+﻿@page "{TemplateId:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Шаблон";
+}
+
+<div class="breadcrumbs col s12">
+    <a asp-page="/TemplateApps/Index">Приложения</a>
+    <span>&#62;</span>
+    <a asp-page="/TemplateApps/Edit" asp-route-templateAppId="@Model.TemplateApp.Id">@Model.TemplateApp.Name</a>
+    <span>&#62;</span>
+    <span>@Model.Template.ApiRef</span>
+</div>
+
+<h5>@ViewData["Title"]</h5>
+
+<form class="col s12" method="post" style="margin-top: 32px;">
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Идентификатор Api</label>
+            <input type="text" required data-length="16" asp-for="ApiRef">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 0;">
+        <div class="file-field input-field col s6">
+            <input type="file" asp-for="TemplateFile">
+            <div class="file-path-wrapper" style="padding: 0;">
+                <input class="file-path validate" type="text" placeholder="Выберите файл шаблона, если требуется его изменить">
+            </div>
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="TemplateFile"></span>
+        </div>
+    </div>
+
+    <button class="btn waves-effect waves-light orange" type="submit">
+        Изменить
+        <i class="material-icons right">save</i>
+    </button>
+
+    <button class="btn waves-effect waves-light blue" type="submit" asp-page-handler="download" asp-route-id="@Model.Template.Id">
+        Скачать
+        <i class="material-icons right">download</i>
+    </button>
+    <button class="btn waves-effect waves-light red" type="submit" asp-page-handler="delete" asp-route-id="@Model.Template.Id">
+        Удалить
+        <i class="material-icons right">delete</i>
+    </button>
+</form>

@@ -8,12 +8,12 @@ public class Template
     /// <summary>
     /// Идентификатор приложения, к которому привязан шаблон
     /// </summary>
-    public string ApplicationID { get; set; }
+    public string AppApiRef { get; set; }
 
     /// <summary>
     /// Идентификатор шаблона
     /// </summary>
-    public string TemplateID { get; set; }
+    public string TemplateApiRef { get; set; }
 
     /// <summary>
     /// Количество необходимых копий документа
@@ -35,10 +35,10 @@ public class Template
     {
     }
 
-    public Template(string applicationId, string templateId, int copies = 1)
+    public Template(string appApiRef, string templateId, int copies = 1)
     {
-        ApplicationID = applicationId;
-        TemplateID = templateId;
+        AppApiRef = appApiRef;
+        TemplateApiRef = templateId;
         Copies = copies;
     }
 }

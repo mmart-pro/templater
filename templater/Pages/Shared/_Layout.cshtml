@@ -35,7 +35,7 @@
         <div class="footer-copyright">
             <div class="container">
                 <span>&copy; 2022</span> - <a class="grey-text text-lighten-4" href="mailto:mmart@inbox.ru">Михаил Мартынов</a>
-                <a class="grey-text text-lighten-4 right" href="#!" target="_blank">Project home</a>
+                <a class="grey-text text-lighten-4 right" href="https://github.com/mmart-pro/templater" target="_blank">Project on GitHub</a>
             </div>
         </div>
     </footer>
@@ -43,9 +43,15 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/materialize/js/materialize.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-@*<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-*@
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    *@
     @await RenderSectionAsync("Scripts", required: false)
+
+@*    <script>
+        $(document).ready(function () {
+            M.AutoInit();
+        })
+    </script>*@
 </body>
 </html>

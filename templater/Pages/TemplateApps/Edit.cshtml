@@ -1,0 +1,78 @@
+﻿@page "{TemplateAppId:int}"
+@model EditModel
+@{
+    ViewData["Title"] = "Приложение";
+}
+
+<div class="breadcrumbs col s12">
+    <a asp-page="Index">Приложения</a>
+    <span>&#62;</span>
+    <span>@Model.TemplateApp.Name</span>
+</div>
+
+<h5>@ViewData["Title"]</h5>
+<form class="col s12" method="post">
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Идентификатор Api</label>
+            <input type="text" required data-length="16" asp-for="ApiRef">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Название приложения</label>
+            <input type="text" required data-length="40" asp-for="Name">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="Name"></span>
+        </div>
+    </div>
+
+    <button class="btn waves-effect waves-light orange" type="submit">
+        Изменить
+        <i class="material-icons right">save</i>
+    </button>
+    <button class="btn waves-effect waves-light red" type="submit" asp-page-handler="delete" asp-route-id="@Model.TemplateApp.Id">
+        Удалить
+        <i class="material-icons right">delete</i>
+    </button>
+</form>
+
+<h5 style="margin-top: 48px;">Шаблоны приложения</h5>
+<div>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light orange" asp-page="/Templates/Create" asp-route-templateAppId="@Model.TemplateApp.Id"><i class="material-icons">add</i></a>
+    </div>
+
+    <table class="highlight centered">
+        <thead>
+            <tr>
+                <th>Формат</th>
+                <th>Идентификатор</th>
+                <th>Создан</th>
+                <th>Изменён</th>
+                <th>Использован</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in @Model.Templates)
+            {
+                <tr onclick="window.location.href='/Templates/Edit/@template.Id'; return false" style="cursor: pointer;">
+                    <td><img class="template-img" src="/img/@(template.TemplateFormat.IconFileName)"></td>
+                    <td><div>@template.ApiRef</div></td>
+                    <td><div>@template.CreateTimeStamp</div></td>
+                    <td><div>@template.TimeStamp</div></td>
+                    <td><div>@template.LastUsedDateTime</div></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+      $('input').characterCounter();
+    });
+</script>
+}

@@ -1,0 +1,43 @@
+﻿@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Новое приложение";
+}
+
+<div class="breadcrumbs col s12">
+    <a asp-page="Index">Приложения</a>
+    <span>&#62;</span>
+    <span>Новое приложение</span>
+</div>
+
+<h5>@ViewData["Title"]</h5>
+<form class="col s12" method="post">
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Идентификатор Api</label>
+            <input type="text" required data-length="16" asp-for="ApiRef">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Название приложения</label>
+            <input type="text" required data-length="40" asp-for="Name">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="Name"></span>
+        </div>
+    </div>
+
+    <button class="btn waves-effect waves-light orange" type="submit" name="action">
+        Создать
+        <i class="material-icons right">send</i>
+    </button>
+</form>
+
+@section Scripts {
+<script>
+    $(document).ready(function() {
+      $('input').characterCounter();
+    });
+</script>
+}

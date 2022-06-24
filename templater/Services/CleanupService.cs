@@ -57,7 +57,7 @@ public class CleanupService : IHostedService, IDisposable
     {
         try
         {
-            _logger.LogDebug("Очистка БД и удаление файлов...");
+            _logger.LogDebug("Очистка БД...");
 
             // считать текущие настройки
             var appSettings = _configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
@@ -70,23 +70,12 @@ public class CleanupService : IHostedService, IDisposable
 
             // удаление старых документов
             var docMaxDate = DateTime.Now.AddDays(-appSettings.DOC_DAYS_KEEP);
-            var toRemove = context.Documents.Where(d => d.CreateTimeStamp < docMaxDate).ToArray();
-
-            foreach (var d in toRemove)
-                try
-                {
-                    File.Delete(appSettings.DOC_PATH + d.Id);
-                    context.Documents.Remove(d);
-                    context.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, $"Ошибка при удалении документа {d.Id}");
-                }
+            context.Documents.RemoveRange(context.Documents.Where(d => d.CreateTimeStamp < docMaxDate));
+            context.SaveChanges();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при очистке БД или удалении файлов");
+            _logger.LogError(ex, "Ошибка при очистке БД");
         }
 
         // следующее срабатывание таймера

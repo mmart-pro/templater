@@ -1,4 +1,5 @@
 ﻿using Aspose.Cells;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
@@ -60,23 +61,24 @@ namespace templater.Classes
             foreach (var template in contract.Templates)
             {
 
-                // загрузить файл
-                var srcPath = _appSettings.TEMPLATE_PATH + template.ApplicationID + Path.DirectorySeparatorChar + template.TemplateID;
-                _logger.LogDebug("Загрузка файла шаблона {srcPath}", srcPath);
-                var data = File.ReadAllBytes(srcPath);
+                // загрузить файл шаблона
+                _logger.LogDebug("Загрузка шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
+                var dbTemplate = _context.Templates
+                    .Include(t=>t.TemplateApp)
+                    .Single(t => t.ApiRef == template.TemplateApiRef && t.TemplateApp.ApiRef == template.AppApiRef);
 
                 // для статистики сохраним в БД, что шаблон использовался
-                _logger.LogDebug("Обновление статистики использования шаблона {srcPath}", srcPath);
-                var dbTemplate = _context.Templates.SingleOrDefault(t => t.TemplateAppId == template.ApplicationID && t.Id == template.TemplateID);
-                dbTemplate!.LastUsedDateTime = DateTime.Now;
+                _logger.LogDebug("Обновление статистики использования шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
+                dbTemplate.LastUsedDateTime = DateTime.Now;
                 _context.SaveChanges();
 
-                _logger.LogDebug("Заполнение шаблона {srcPath}", srcPath);
+                _logger.LogDebug("Заполнение шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
 
-                if (template.TemplateID.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase))
-                    filledDocs.Add(new(_xlsxFiller.Fill(data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.XLSX, template.Copies, template.TemplateID));
-                else if (template.TemplateID.EndsWith("docx", StringComparison.OrdinalIgnoreCase))
-                    filledDocs.Add(new(_docxFiller.Fill(data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.DOCX, template.Copies, template.TemplateID));
+#warning тут переделывать
+                if (template.TemplateApiRef.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase))
+                    filledDocs.Add(new(_xlsxFiller.Fill(dbTemplate.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.XLSX, template.Copies, template.TemplateApiRef));
+                else if (template.TemplateApiRef.EndsWith("docx", StringComparison.OrdinalIgnoreCase))
+                    filledDocs.Add(new(_docxFiller.Fill(dbTemplate.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.DOCX, template.Copies, template.TemplateApiRef));
                 else
                     throw new Exception("Неподдерживаемый формат шаблона");
             }

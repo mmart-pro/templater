@@ -8,7 +8,7 @@ namespace templater.Pages
         public IActionResult OnGet()
         {
 #warning наверняка можно как-то более изящно сделать index page
-            return RedirectToPage("/TemplateApps");
+            return RedirectToPage("/TemplateApps/Index");
         }
     }
 }
