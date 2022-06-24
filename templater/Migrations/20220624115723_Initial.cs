@@ -57,7 +57,7 @@ namespace templater.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     TemplateAppId = table.Column<int>(type: "INTEGER", maxLength: 16, nullable: false),
                     ApiRef = table.Column<string>(type: "TEXT", maxLength: 16, nullable: false),
-                    Data = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    DataSize = table.Column<long>(type: "INTEGER", nullable: false),
                     TemplateFormatId = table.Column<int>(type: "INTEGER", nullable: false),
                     CreateTimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -76,6 +76,24 @@ namespace templater.Migrations
                         name: "FK_Templates_TemplateFormats_TemplateFormatId",
                         column: x => x.TemplateFormatId,
                         principalTable: "TemplateFormats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TemplateData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Data = table.Column<byte[]>(type: "BLOB", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemplateData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemplateData_Templates_Id",
+                        column: x => x.Id,
+                        principalTable: "Templates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -106,6 +124,9 @@ namespace templater.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Documents");
+
+            migrationBuilder.DropTable(
+                name: "TemplateData");
 
             migrationBuilder.DropTable(
                 name: "Templates");

@@ -64,7 +64,8 @@ namespace templater.Classes
                 // загрузить файл шаблона
                 _logger.LogDebug("Загрузка шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
                 var dbTemplate = _context.Templates
-                    .Include(t=>t.TemplateApp)
+                    .Include(t => t.TemplateApp)
+                    .Include(t => t.TemplateData)
                     .Single(t => t.ApiRef == template.TemplateApiRef && t.TemplateApp.ApiRef == template.AppApiRef);
 
                 // для статистики сохраним в БД, что шаблон использовался
@@ -76,9 +77,9 @@ namespace templater.Classes
 
 #warning тут переделывать
                 if (template.TemplateApiRef.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase))
-                    filledDocs.Add(new(_xlsxFiller.Fill(dbTemplate.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.XLSX, template.Copies, template.TemplateApiRef));
+                    filledDocs.Add(new(_xlsxFiller.Fill(dbTemplate.TemplateData.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.XLSX, template.Copies, template.TemplateApiRef));
                 else if (template.TemplateApiRef.EndsWith("docx", StringComparison.OrdinalIgnoreCase))
-                    filledDocs.Add(new(_docxFiller.Fill(dbTemplate.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.DOCX, template.Copies, template.TemplateApiRef));
+                    filledDocs.Add(new(_docxFiller.Fill(dbTemplate.TemplateData.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.DOCX, template.Copies, template.TemplateApiRef));
                 else
                     throw new Exception("Неподдерживаемый формат шаблона");
             }

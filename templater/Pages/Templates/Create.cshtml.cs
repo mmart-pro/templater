@@ -101,7 +101,8 @@ public class CreateModel : PageModel
         using (var m = new MemoryStream())
         {
             await inputFile.CopyToAsync(m);
-            template.Data = m.ToArray();
+            template.TemplateData = new TemplateData { Data = m.ToArray() };
+            template.DataSize = template.TemplateData.Data.Length;
         }
 
         _context.Templates.Add(template);

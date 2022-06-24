@@ -31,7 +31,12 @@ public class Template
     /// <summary>
     /// Данные шаблона
     /// </summary>
-    public byte[] Data { get; set; }
+    public TemplateData TemplateData { get; set; }
+
+    /// <summary>
+    /// Размер данных
+    /// </summary>
+    public long DataSize { get; set; }
 
     /// <summary>
     /// Идентификатор формата

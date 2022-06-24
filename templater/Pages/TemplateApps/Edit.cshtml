@@ -49,6 +49,7 @@
             <tr>
                 <th>Формат</th>
                 <th>Идентификатор</th>
+                <th>Размер</th>
                 <th>Создан</th>
                 <th>Изменён</th>
                 <th>Использован</th>
@@ -60,6 +61,7 @@
                 <tr onclick="window.location.href='/Templates/Edit/@template.Id'; return false" style="cursor: pointer;">
                     <td><img class="template-img" src="/img/@(template.TemplateFormat.IconFileName)"></td>
                     <td><div>@template.ApiRef</div></td>
+                    <td><div>@template.DataSize</div></td>
                     <td><div>@template.CreateTimeStamp</div></td>
                     <td><div>@template.TimeStamp</div></td>
                     <td><div>@template.LastUsedDateTime</div></td>

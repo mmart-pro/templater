@@ -106,7 +106,8 @@ public class EditModel : PageModel
 
             using var m = new MemoryStream();
             await inputFile.CopyToAsync(m);
-            Template.Data = m.ToArray();
+            Template.TemplateData.Data = m.ToArray();
+            Template.DataSize = Template.TemplateData.Data.Length;
         }
 
         _context.Attach(Template).State = EntityState.Modified;
@@ -129,7 +130,7 @@ public class EditModel : PageModel
     public async Task<IActionResult> OnPostDownloadAsync()
     {
         var template = await _context.Templates
-            .Include(t => t.TemplateFormat)
+            .Include(t => t.TemplateData)
             .SingleOrDefaultAsync(t => t.Id == TemplateId);
         if (template == null)
             return NotFound();
@@ -139,6 +140,6 @@ public class EditModel : PageModel
         if (!string.IsNullOrEmpty(ext) && !fileName.ToLower().EndsWith("." + ext.ToLower()))
             fileName += "." + ext.ToLower();
 
-        return File(template.Data, "application/octet-stream", fileName);
+        return File(template.TemplateData.Data, "application/octet-stream", fileName);
     }
 }

@@ -41,6 +41,8 @@ public class Context : DbContext
                 }
             });
 
+        modelBuilder.Entity<Template>(e => e.HasOne(f => f.TemplateData).WithOne().HasForeignKey<TemplateData>(d => d.Id));
+
         modelBuilder.Entity<Template>()
             .HasIndex(x => new { x.TemplateAppId, x.ApiRef })
             .IsUnique();

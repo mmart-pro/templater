@@ -11,7 +11,7 @@ using templater.Model;
 namespace templater.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220624111234_Initial")]
+    [Migration("20220624115723_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,9 +52,8 @@ namespace templater.Migrations
                     b.Property<DateTime>("CreateTimeStamp")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Data")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
+                    b.Property<long>("DataSize")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("LastUsedDateTime")
                         .HasColumnType("TEXT");
@@ -98,6 +97,20 @@ namespace templater.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TemplateApps");
+                });
+
+            modelBuilder.Entity("templater.Model.TemplateData", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TemplateData");
                 });
 
             modelBuilder.Entity("templater.Model.TemplateFormat", b =>
@@ -145,6 +158,21 @@ namespace templater.Migrations
                     b.Navigation("TemplateApp");
 
                     b.Navigation("TemplateFormat");
+                });
+
+            modelBuilder.Entity("templater.Model.TemplateData", b =>
+                {
+                    b.HasOne("templater.Model.Template", null)
+                        .WithOne("TemplateData")
+                        .HasForeignKey("templater.Model.TemplateData", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("templater.Model.Template", b =>
+                {
+                    b.Navigation("TemplateData")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
