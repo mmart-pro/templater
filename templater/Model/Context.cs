@@ -14,6 +14,7 @@ public class Context : DbContext
 
     public DbSet<TemplateApp> TemplateApps { get; set; }
     public DbSet<Template> Templates { get; set; }
+    public DbSet<TemplateData> TemplateDatas { get; set; }
     public DbSet<TemplateFormat> TemplateFormats { get; set; }
 
     private readonly AppSettings _settings;
@@ -41,8 +42,16 @@ public class Context : DbContext
                 }
             });
 
-        modelBuilder.Entity<Template>(e => e.HasOne(f => f.TemplateData).WithOne().HasForeignKey<TemplateData>(d => d.Id));
+        //modelBuilder.Entity<Document>(e => e.Property)
+        //          .HasMaxLength(50)
+        //          .HasConversion(
+        //              v => v.ToString(),
+        //              v => (MyEnum)Enum.Parse(typeof(MyEnum), v))
+        //              .IsUnicode(false);
 
+        modelBuilder.Entity<Document>(e => e.HasOne(f => f.DocumentData).WithOne().HasForeignKey<DocumentData>(d => d.Id));
+
+        modelBuilder.Entity<Template>(e => e.HasOne(f => f.TemplateData).WithOne().HasForeignKey<TemplateData>(d => d.Id));
         modelBuilder.Entity<Template>()
             .HasIndex(x => new { x.TemplateAppId, x.ApiRef })
             .IsUnique();

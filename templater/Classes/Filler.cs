@@ -73,10 +73,9 @@ namespace templater.Classes
 
                 _logger.LogDebug("Заполнение шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
 
-#warning тут переделывать
-                if (template.TemplateApiRef.EndsWith("xlsx", StringComparison.OrdinalIgnoreCase))
+                if (dbTemplate.TemplateFormatId == (int)EnumTemplateFormats.XLSX)
                     filledDocs.Add(new(_xlsxFiller.Fill(dbTemplate.TemplateData.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.XLSX, template.Copies, template.TemplateApiRef));
-                else if (template.TemplateApiRef.EndsWith("docx", StringComparison.OrdinalIgnoreCase))
+                else if (dbTemplate.TemplateFormatId == (int)EnumTemplateFormats.DOCX)
                     filledDocs.Add(new(_docxFiller.Fill(dbTemplate.TemplateData.Data, template, convertToPdf), convertToPdf ? FilledFormat.PDF : FilledFormat.DOCX, template.Copies, template.TemplateApiRef));
                 else
                     throw new Exception("Неподдерживаемый формат шаблона");

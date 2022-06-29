@@ -50,7 +50,8 @@ public class EditModel : PageModel
 
     private void Init(int templateId)
     {
-        Template = _context.Templates.AsNoTracking().SingleOrDefault(t => t.Id == templateId);
+        Template = _context.Templates
+            .AsNoTracking().SingleOrDefault(t => t.Id == templateId);
         if (Template == null)
             return;
         TemplateApp = _context.TemplateApps.AsNoTracking().Single(a => a.Id == Template.TemplateAppId);
@@ -103,8 +104,10 @@ public class EditModel : PageModel
 
             using var m = new MemoryStream();
             await inputFile.CopyToAsync(m);
-            Template.TemplateData.Data = m.ToArray();
-            Template.DataSize = Template.TemplateData.Data.Length;
+
+            var templateData = _context.TemplateDatas.Single(t => t.Id == Template.Id);
+            templateData.Data = m.ToArray();
+            Template.DataSize = templateData.Data.Length;
         }
 
         _context.Attach(Template).State = EntityState.Modified;

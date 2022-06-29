@@ -15,7 +15,7 @@ public class TemplaterRequest
     /// <summary>
     /// Настройки выходного файла
     /// </summary>
-    public Output Output { get; set; }
+    public Output Output { get; set; } = new Output();
 
     /// <summary>
     /// Сериализация запроса в json формат
@@ -40,17 +40,18 @@ public class TemplaterRequest
 
     public TemplaterRequest()
     {
-        Output = new Output();
     }
 
     /// <summary>
     /// Конструктор с настройками выходного файла
     /// </summary>
     /// <param name="outputFormat">Формат выходного файла</param>
+    /// <param name="fileName">Имя выходного файла (игнорируется для pdf)</param>
     /// <param name="zip">Сжимать выходной файл в zip-архив, по умолчанию false</param>
-    public TemplaterRequest(OutputFormats outputFormat, bool zip = false)
+    public TemplaterRequest(OutputFormats outputFormat, string fileName, bool zip = false)
         :this()
     {
+        Output.FileName = fileName;
         Output.Format = outputFormat;
         Output.Zip = zip;
     }

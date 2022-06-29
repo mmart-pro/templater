@@ -20,4 +20,15 @@ public class Table
     /// Строки таблицы, содержащие объекты для замен (структура аналогична replacements)
     /// </summary>
     public TableRow[] Rows { get; set; } = Array.Empty<TableRow>();
+
+    public Table()
+    {
+    }
+
+    public Table(IEnumerable<IDictionary<string, object>> rows, string rowId = "rowNum", bool ignoreZeroes = false)
+    {
+        RowId = rowId;
+        IgnoreZeroes = ignoreZeroes;
+        Rows = rows.Select(x => new TableRow(x)).ToArray();
+    }
 }

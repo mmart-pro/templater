@@ -65,7 +65,7 @@ public class XlsxFiller
         // ищем какие там паттерны
         foreach (var repl in replacements)
         {
-            var template = $"{{{repl.Pattern}}}";
+            var template = "{{" + repl.Pattern + "}}";
             if (!cellValue.Contains(template, StringComparison.OrdinalIgnoreCase))
                 continue;
 

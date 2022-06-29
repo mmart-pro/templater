@@ -6,6 +6,11 @@
 public class Output
 {
     /// <summary>
+    /// Имя выходного файла
+    /// </summary>
+    public string FileName { get; set; }
+
+    /// <summary>
     /// Формат выходного файла, PDF по умолчанию
     /// </summary>
     public OutputFormats Format { get; set; } = OutputFormats.PDF;
