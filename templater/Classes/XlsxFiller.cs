@@ -7,6 +7,7 @@ namespace templater.Classes;
 public class XlsxFiller
 {
     private readonly ILogger<XlsxFiller> _logger;
+    private readonly DefaultReplacements _defaultReplacements;
 
     public byte[] Fill(byte[] template, Template contract, bool convertToPdf)
     {
@@ -48,22 +49,24 @@ public class XlsxFiller
     }
 
     public XlsxFiller(
-        ILogger<XlsxFiller> logger
+        ILogger<XlsxFiller> logger,
+        DefaultReplacements defaultReplacements
         )
     {
         _logger = logger;
+        _defaultReplacements = defaultReplacements;
     }
 
     /// <summary>
     /// Замена в одной ячейке
     /// </summary>
-    void FillCell(Cell cell, Replacement[] replacements, bool ignoreZeroes)
+    void FillCell(Cell cell, IEnumerable<Replacement> replacements, bool ignoreZeroes)
     {
         var cellValue = cell.Value?.ToString() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("{{") || !cellValue.Contains("}}"))
             return;
         // ищем какие там паттерны
-        foreach (var repl in replacements)
+        foreach (var repl in replacements.Union(_defaultReplacements.Replacements))
         {
             var template = "{{" + repl.Pattern + "}}";
             if (!cellValue.Contains(template, StringComparison.OrdinalIgnoreCase))

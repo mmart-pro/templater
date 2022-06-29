@@ -62,13 +62,13 @@ public class DocController : ControllerBase
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [HttpPost]
-    public IActionResult Generate() // [FromBody] TemplaterRequest templaterRequest)
+    public IActionResult Generate() //[FromBody] TemplaterRequest templaterRequest)
     {
+#warning какой-то маразм из-за чего не цепляется ФромБоди не ясно...
         StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8);
         var s = reader.ReadToEndAsync();
         s.Wait();
         var templaterRequest = JsonSerializer.Deserialize<TemplaterRequest>(s.Result); // new TemplaterRequest();
-
 
 #warning по-хорошему надо закрывать на авторизацию
         try

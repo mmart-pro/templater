@@ -24,6 +24,7 @@ builder.Services.AddHostedService<CleanupService>();
 builder.Services.AddTransient<DocxFiller>();
 builder.Services.AddTransient<XlsxFiller>();
 builder.Services.AddTransient<Filler>();
+builder.Services.AddTransient<DefaultReplacements>();
 
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
