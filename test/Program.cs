@@ -15,32 +15,34 @@ TemplaterRequest r = new TemplaterRequest(OutputFormats.PDF, "test.pdf", zip: fa
     {
         new Template(appApiRef: "xxx", templateId: "mx1")
         {
-            Replacements = new[]
+            Replacements = new Dictionary<string, object> (new KeyValuePair<string, object>[]
             {
-                new Replacement("name", "туалетный утёнок"),
-                new Replacement("summa", 123.45, ReplacementOptions.ToSumStringOption)
-            }
+                new ("name", "туалетный утёнок"),
+                new ("summa", 123.45)
+            })
         },
         new Template()
     }
 };
 
-// Console.WriteLine(r.ToJsonString());
+Console.WriteLine(r.ToJsonString());
 
-//var obj = new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("some", "value") };
+Console.ReadLine();
 
-var obj = new Dictionary<string, object>(new[] { new KeyValuePair<string, object>("some", "value") });
+////var obj = new KeyValuePair<string, object>[] { new KeyValuePair<string, object>("some", "value") };
+
+//var obj = new Dictionary<string, object>(new[] { new KeyValuePair<string, object>("some", "value") });
+////{
+////       new KeyValuePair<string, object>("some", "value") 
+////     //"some", "value" 
+//// };
+
+//var jsonOptions = new JsonSerializerOptions
 //{
-//       new KeyValuePair<string, object>("some", "value") 
-//     //"some", "value" 
-// };
-
-var jsonOptions = new JsonSerializerOptions
-{
-    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    WriteIndented = true,
-    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+//    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+//    WriteIndented = true,
+//    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
     
-};
+//};
 
-Console.WriteLine(JsonSerializer.Serialize(obj, jsonOptions));
+//Console.WriteLine(JsonSerializer.Serialize(obj, jsonOptions));

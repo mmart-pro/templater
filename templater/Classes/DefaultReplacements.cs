@@ -1,10 +1,8 @@
-﻿using templater.contracts;
-
-namespace templater.Classes
+﻿namespace templater.Classes
 {
     public class DefaultReplacements
     {
-        public Replacement[] Replacements;
+        public KeyValuePair<string, object>[] Replacements;
 
         public DefaultReplacements()
         {
@@ -16,7 +14,7 @@ namespace templater.Classes
             // {{ГГГГ}}, {{ГГ}} - год
             var date = DateTime.Today;
             var dateTime = DateTime.Now;
-            Replacements = new Replacement[]
+            Replacements = new KeyValuePair<string, object>[]
             {
                 new ("ДАТА", date.ToString("dd.MM.yyyy")),
                 new ("ДАТАВРЕМЯ", dateTime.ToString("dd.MM.yyyy HH:mm")),

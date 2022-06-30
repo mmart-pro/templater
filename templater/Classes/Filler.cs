@@ -35,7 +35,6 @@ namespace templater.Classes
         /// </summary>
         public Filler(
             Context context,
-            IOptions<AppSettings> appSettings,
             ILogger<Filler> logger,
             XlsxFiller xlsxFiller,
             DocxFiller docxFiller
@@ -46,6 +45,8 @@ namespace templater.Classes
             _xlsxFiller = xlsxFiller;
             _docxFiller = docxFiller;
         }
+
+#warning по-уму надо на async + stream вместо массивов переделать
 
         public byte[] Fill(TemplaterRequest contract)
         {

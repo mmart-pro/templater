@@ -11,12 +11,12 @@ public class TemplaterRequest
     /// <summary>
     /// Шаблоны документов, которые требуется обработать
     /// </summary>
-    public Template[] Templates { get; set; } = Array.Empty<Template>();
+    public Template[] Templates { get; set; }
 
     /// <summary>
     /// Настройки выходного файла
     /// </summary>
-    public Output Output { get; set; } = new Output();
+    public Output Output { get; set; }
 
     /// <summary>
     /// Сериализация запроса в json формат
@@ -26,8 +26,8 @@ public class TemplaterRequest
         var jsonOptions = new JsonSerializerOptions
         {
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+            WriteIndented = true
         };
         return JsonSerializer.Serialize(this, jsonOptions);
     }
@@ -40,21 +40,34 @@ public class TemplaterRequest
         return JsonSerializer.Deserialize<TemplaterRequest>(json)!;
     }
 
-    public TemplaterRequest()
-    {
-    }
-
     /// <summary>
     /// Конструктор с настройками выходного файла
     /// </summary>
     /// <param name="outputFormat">Формат выходного файла</param>
     /// <param name="fileName">Имя выходного файла (игнорируется для pdf)</param>
     /// <param name="zip">Сжимать выходной файл в zip-архив, по умолчанию false</param>
-    public TemplaterRequest(OutputFormats outputFormat, string fileName, bool zip = false)
-        :this()
+    public TemplaterRequest(OutputFormats outputFormat, string fileName, bool zip, params Template[] templates)
     {
-        Output.FileName = fileName;
-        Output.Format = outputFormat;
-        Output.Zip = zip;
+        Output = new Output
+        {
+            Format = outputFormat,
+            FileName = fileName,
+            Zip = zip
+        };
+        Templates = templates ?? Array.Empty<Template>();
+    }
+    public TemplaterRequest(OutputFormats outputFormat, bool zip, params Template[] templates)
+        : this(outputFormat, fileName: string.Empty, zip, templates)
+    {
+    }
+
+    public TemplaterRequest(OutputFormats outputFormat, params Template[] templates)
+        : this(outputFormat, fileName: string.Empty, zip: false, templates)
+    {
+    }
+
+    public TemplaterRequest()
+        : this(OutputFormats.PDF)
+    {
     }
 }

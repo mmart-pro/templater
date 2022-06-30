@@ -8,7 +8,7 @@ public class Output
     /// <summary>
     /// Имя выходного файла
     /// </summary>
-    public string FileName { get; set; }
+    public string FileName { get; set; } = string.Empty;
 
     /// <summary>
     /// Формат выходного файла, PDF по умолчанию
@@ -19,5 +19,5 @@ public class Output
     /// Сжимать выходной файл в zip-архив, по умолчанию false,
     /// если Format = ZIP, то поле игнорируется, так как и так будет zip-архив
     /// </summary>
-    public bool Zip { get; set; }
+    public bool Zip { get; set; } = false;
 }

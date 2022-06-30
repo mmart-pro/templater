@@ -1,5 +1,4 @@
 ﻿using Aspose.Cells;
-using docs.Classes;
 using templater.contracts;
 
 namespace templater.Classes;
@@ -9,6 +8,15 @@ public class XlsxFiller
     private readonly ILogger<XlsxFiller> _logger;
     private readonly DefaultReplacements _defaultReplacements;
 
+    public XlsxFiller(
+        ILogger<XlsxFiller> logger,
+        DefaultReplacements defaultReplacements
+        )
+    {
+        _logger = logger;
+        _defaultReplacements = defaultReplacements;
+    }
+
     public byte[] Fill(byte[] template, Template contract, bool convertToPdf)
     {
         using var input = new MemoryStream(template);
@@ -17,11 +25,8 @@ public class XlsxFiller
         var cells = workbook.Worksheets[0].Cells;
 
         // заполнить подстановки
-        if (contract.Replacements.Length > 0)
-        {
-            _logger.LogDebug("Заполнение подстановок в документе...");
-            FillXlsHeaders(cells, contract.Replacements);
-        }
+        _logger.LogDebug("Заполнение подстановок в документе...");
+        FillXlsHeaders(cells, contract.Replacements);
 
         // заполнить таблицы
         if (contract.Tables.Length > 0)
@@ -48,40 +53,25 @@ public class XlsxFiller
         return output.ToArray();
     }
 
-    public XlsxFiller(
-        ILogger<XlsxFiller> logger,
-        DefaultReplacements defaultReplacements
-        )
-    {
-        _logger = logger;
-        _defaultReplacements = defaultReplacements;
-    }
-
     /// <summary>
     /// Замена в одной ячейке
     /// </summary>
-    void FillCell(Cell cell, IEnumerable<Replacement> replacements, bool ignoreZeroes)
+    void FillCell(Cell cell, IDictionary<string, object> replacements, bool ignoreZeroes)
     {
         var cellValue = cell.Value?.ToString() ?? string.Empty;
         if (string.IsNullOrWhiteSpace(cellValue) || !cellValue.Contains("{{") || !cellValue.Contains("}}"))
             return;
+
         // ищем какие там паттерны
-        foreach (var repl in replacements.Union(_defaultReplacements.Replacements))
+        var repls = replacements.AsEnumerable().Union(_defaultReplacements.Replacements);
+        foreach (var repl in repls)
         {
-            var template = "{{" + repl.Pattern + "}}";
+            var template = "{{" + repl.Key + "}}";
             if (!cellValue.Contains(template, StringComparison.OrdinalIgnoreCase))
                 continue;
 
             // на что менять
             var replaceTo = repl.Value?.ToString() ?? string.Empty;
-            // если есть опции
-            if (repl.Options != null && repl.Options.ToSumString)
-            {
-                if (decimal.TryParse(replaceTo, out decimal newValue))
-                    replaceTo = MoneyConverter.CurrencyToTxt(newValue);
-                else
-                    _logger.LogWarning("Ошибка преобразования числа {replaceTo} в decimal для строкового представления", replaceTo);
-            }
             // игнорирование нулей
             if (ignoreZeroes && decimal.TryParse(replaceTo, out decimal zeroValue) && zeroValue == 0)
                 replaceTo = string.Empty;
@@ -96,7 +86,7 @@ public class XlsxFiller
     /// <summary>
     /// Замена "заголовков" документа XLS
     /// </summary>
-    void FillXlsHeaders(Cells cells, Replacement[] replacements)
+    void FillXlsHeaders(Cells cells, Dictionary<string, object> replacements)
     {
         for (var r = cells.MinDataRow; r <= cells.MaxDataRow; r++)
             for (var c = cells.MinDataColumn; c <= cells.MaxDataColumn; c++)
@@ -106,16 +96,16 @@ public class XlsxFiller
     /// <summary>
     /// Замена в строке докуметна XLS
     /// </summary>
-    void FillXlsRow(int rowIndex, Cells cells, TableRow rowData, bool ignoreZeroValues)
+    void FillXlsRow(int rowIndex, Cells cells, IDictionary<string, object> rowData, bool ignoreZeroValues)
     {
         for (var c = cells.MinDataColumn; c <= cells.MaxDataColumn; c++)
-            FillCell(cells[rowIndex, c], rowData.Replacements, ignoreZeroValues);
+            FillCell(cells[rowIndex, c], rowData, ignoreZeroValues);
     }
 
     /// <summary>
     /// Заполнение таблицы
     /// </summary>
-    void FillTable(Cells cells, int templateRowIndex, TableRow[] rows, bool ignoreZeroes)
+    void FillTable(Cells cells, int templateRowIndex, IDictionary<string, object>[] rows, bool ignoreZeroes)
     {
         var insertIndex = 1;
         foreach (var r in rows)
