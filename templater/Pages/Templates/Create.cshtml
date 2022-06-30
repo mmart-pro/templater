@@ -16,20 +16,20 @@
 
 <form class="col s12" method="post" enctype="multipart/form-data">
     <div class="row" style="margin-bottom: 0;">
-        <div class="input-field col s6">
-            <label>Идентификатор Api</label>
-            <input type="text" required data-length="16" asp-for="ApiRef">
-            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
-        </div>
-    </div>
-
-    <div class="row" style="margin-bottom: 0;">
         <div class="file-field input-field col s6">
-            <input type="file" asp-for="TemplateFile" required>
+            <input id="fileInput" onchange="setTemplateId()" type="file" asp-for="TemplateFile" required>
             <div class="file-path-wrapper" style="padding: 0;">
                 <input class="file-path validate" type="text" placeholder="Выберите файл шаблона">
             </div>
             <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="TemplateFile"></span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Идентификатор Api</label>
+            <input id="templateName" type="text" required data-length="16" asp-for="ApiRef">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
         </div>
     </div>
 
@@ -38,3 +38,14 @@
         <i class="material-icons right">send</i>
     </button>
 </form>
+
+@section Scripts {
+<script>
+    function setTemplateId() {
+      const name = document.getElementById('fileInput').files.item(0).name;
+      const filename = name.substring(0, name.lastIndexOf('.'))
+      document.getElementById('templateName').value = filename;
+      document.getElementById('templateName').focus()
+    }
+</script>
+}

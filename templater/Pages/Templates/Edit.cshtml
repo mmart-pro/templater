@@ -16,20 +16,20 @@
 
 <form class="col s12" method="post" style="margin-top: 32px;" enctype="multipart/form-data">
     <div class="row" style="margin-bottom: 0;">
-        <div class="input-field col s6">
-            <label>Идентификатор Api</label>
-            <input type="text" required data-length="16" asp-for="ApiRef">
-            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
-        </div>
-    </div>
-
-    <div class="row" style="margin-bottom: 0;">
         <div class="file-field input-field col s6">
             <input type="file" asp-for="TemplateFile">
             <div class="file-path-wrapper" style="padding: 0;">
                 <input class="file-path validate" type="text" placeholder="Выберите файл шаблона, если требуется его изменить">
             </div>
             <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="TemplateFile"></span>
+        </div>
+    </div>
+
+    <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s6">
+            <label>Идентификатор Api</label>
+            <input type="text" required data-length="16" asp-for="ApiRef">
+            <span class="helper-text red-text" data-error="wrong" data-success="right" asp-validation-for="ApiRef"></span>
         </div>
     </div>
 
