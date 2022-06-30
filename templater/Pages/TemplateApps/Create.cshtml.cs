@@ -17,7 +17,7 @@ public class CreateModel : PageModel
     public string Name { get; set; }
 
     [BindProperty]
-    [MaxLength(16)]
+    [MaxLength(32)]
     [Required(AllowEmptyStrings = false, ErrorMessage = "Некорректный идентификатор приложения")]
     public string ApiRef { get; set; }
 

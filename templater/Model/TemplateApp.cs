@@ -18,7 +18,7 @@ public class TemplateApp
     /// <summary>
     /// Имя приложения для обращения через Api
     /// </summary>
-    [MaxLength(16)]
+    [MaxLength(32)]
     public string ApiRef { get; set; }
 
     /// <summary>

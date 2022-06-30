@@ -25,7 +25,7 @@ public class CreateModel : PageModel
     /// Идентификатор шаблона для Api
     /// </summary>
     [BindProperty]
-    [MaxLength(16)]
+    [MaxLength(32)]
     [Required(AllowEmptyStrings = false, ErrorMessage = "Некорректный идентификатор шаблона")]
     public string ApiRef { get; set; }
 

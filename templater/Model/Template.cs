@@ -15,7 +15,7 @@ public class Template
     /// <summary>
     /// Идентификатор приложения
     /// </summary>
-    [MaxLength(16)]
+    [MaxLength(32)]
     public int TemplateAppId { get; set; }
 
     public TemplateApp TemplateApp { get; set; }
@@ -25,7 +25,7 @@ public class Template
     /// должно быть уникальным в пределах приложения
     /// по сути это имя файла
     /// </summary>
-    [MaxLength(16)]
+    [MaxLength(32)]
     public string ApiRef { get; set; }
 
     /// <summary>

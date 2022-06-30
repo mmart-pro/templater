@@ -31,7 +31,7 @@ public class EditModel : PageModel
     /// Идентификатор шаблона для Api из формы (post)
     /// </summary>
     [BindProperty]
-    [MaxLength(16)]
+    [MaxLength(32)]
     [Required(AllowEmptyStrings = false, ErrorMessage = "Некорректный идентификатор шаблона")]
     public string ApiRef { get; set; }
 
