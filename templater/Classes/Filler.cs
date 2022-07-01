@@ -174,19 +174,19 @@ namespace templater.Classes
             using var outStream = new MemoryStream();
             using (var output = new Workbook())
             {
-                var i = 1;
                 foreach (var xls in filledDocs)
                 {
                     using var srcStream = new MemoryStream(xls.Data);
                     using var src = new Workbook(srcStream);
-                    for (var c = 0; i < xls.Copies; c++)
-                    {
-                        // делаем новую страницу
-                        var newSheet = output.Worksheets.Add($"Лист {i} - {xls.TemplateId}");
-                        // и копируем в другой файл
-                        newSheet.Copy(src.Worksheets[0]);
-                        i++;
-                    }
+                    for (var c = 0; c < xls.Copies; c++)
+                        foreach (var srcSheet in src.Worksheets)
+                            if (srcSheet.IsVisible)
+                            {
+                                // делаем новую страницу
+                                var newSheet = output.Worksheets.Add($"Лист {output.Worksheets.Count} - {srcSheet.Name}");
+                                // и копируем в другой файл
+                                newSheet.Copy(srcSheet);
+                            }
                 }
                 // удаление пустого диста
                 output.Worksheets.RemoveAt(0);
