@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using templater.contracts.Classes;
 
 namespace templater.contracts;
 
@@ -29,6 +30,7 @@ public class TemplaterRequest
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
             WriteIndented = true
         };
+        jsonOptions.Converters.Add(new DateTimeConverter());
         return JsonSerializer.Serialize(this, jsonOptions);
     }
 
