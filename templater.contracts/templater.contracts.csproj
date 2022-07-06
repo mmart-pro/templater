@@ -5,21 +5,25 @@
 		<Nullable>enable</Nullable>
 		<PackageId>Templater.Contracts</PackageId>
 		<Authors>mmart</Authors>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateNuspecDependsOn>$(GenerateNuspecDependsOn);SetPackageVersion</GenerateNuspecDependsOn>
 	</PropertyGroup>
-
-	<Target Name="SetPackageVersion" DependsOnTargets="Build">
-		<PropertyGroup>
-			<!-- <PackageVersion>$([System.DateTime]::Now.ToString(&quot;yyyy.MM.dd.HHmmss&quot;))</PackageVersion> -->
-			<!-- You can customize the format and the rule about how version increases here. -->
-			<PackageVersion>$([System.DateTime]::Now.ToString(&quot;yy.MM.dd&quot;))</PackageVersion>
-		</PropertyGroup>
-	</Target>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="System.Text.Json" Version="6.0.5" />
 	</ItemGroup>
 
+	<Target Name="SetPackageVersion" DependsOnTargets="Publish">
+		<PropertyGroup>
+			<PackageVersion>$([System.DateTime]::Now.ToString("yy.M.d.HHmmss"))</PackageVersion>
+		</PropertyGroup>
+	</Target>
+
+	<Target Name="BeforePublishTask" BeforeTargets="GenerateNuspec">
+		<RemoveDir Directories="$(PublishDir)" />
+	</Target>
+
+	<Target Name="AfterPublishTask" AfterTargets="GenerateNuspec">
+		<Copy SourceFiles="$(PublishDir)\\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="d:\\Projects\\_nupkg\\" />
+	</Target>
 </Project>
