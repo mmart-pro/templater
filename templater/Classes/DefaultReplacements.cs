@@ -19,12 +19,33 @@
                 new ("ДАТА", date.ToString("dd.MM.yyyy")),
                 new ("ДАТАВРЕМЯ", dateTime.ToString("dd.MM.yyyy HH:mm")),
                 new ("Д", date.Day.ToString()),
-                new ("ДД", date.ToString("d")),
+                new ("ДД", date.Day.ToString("D2")),
                 new ("М", date.Month.ToString()),
-                new ("ММ", date.ToString("MM")),
-                new ("ГГ", date.ToString("yy")),
+                new ("ММ", date.Month.ToString("D2")),
+                new ("МЕСЯЦ", MonthToString(date.Month)),
+                new ("ГГ", (date.Year-2000).ToString()),
                 new ("ГГГГ", date.Year.ToString())
             };
+        }
+
+        static string MonthToString(int month)
+        {
+            var monthes = new[]
+            {
+                "января",
+                "февраля",
+                "марта",
+                "апреля",
+                "мая",
+                "июня",
+                "июля",
+                "августа",
+                "сентября",
+                "октября",
+                "ноября",
+                "декабря"
+            };
+            return monthes[month - 1];
         }
     }
 }
