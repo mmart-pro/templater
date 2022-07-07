@@ -1,0 +1,6 @@
+apt-get install -y libgdiplus
+apt-get install -y apt-utils libc6-dev
+
+#fonts
+sudo apt install ttf-mscorefonts-installer
+sudo fc-cache -vr

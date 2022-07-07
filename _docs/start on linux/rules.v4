@@ -1,0 +1,52 @@
+# sudo mcedit /etc/iptables/rules.v4
+# Set a default policy of DROP
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+# Accept any related or established connections
+-I INPUT  1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+-I OUTPUT 1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# Allow all traffic on the loopback interface
+-A INPUT -i lo -j ACCEPT
+-A OUTPUT -o lo -j ACCEPT
+
+# ping
+-A INPUT -p icmp -j ACCEPT
+-A OUTPUT -p icmp -j ACCEPT
+
+# SSH
+-A INPUT -p tcp -m tcp --dport 22 -m state --state NEW  -j ACCEPT
+
+# WEB
+-A INPUT -p tcp -m multiport --dports 80,443 -m state --state NEW  -j ACCEPT
+
+# ftp
+-A INPUT -p tcp -m tcp --dport 21 -m state --state NEW  -j ACCEPT
+-A INPUT -p tcp -m multiport --dports 30000:31000 -m state --state NEW  -j ACCEPT
+
+# SQL
+-A INPUT -p tcp -m multiport --dports 1433,1434 -m state --state NEW  -j ACCEPT
+
+########### OUTPUT ###########
+
+# sql server wmsa
+-A OUTPUT -p tcp -m multiport --dports 1433,1434 -d 172.16.1.3 -m state --state NEW -j ACCEPT
+
+#printbc
+-A OUTPUT -p tcp -m tcp -d 172.16.3.72 -m state --state NEW  -j ACCEPT
+
+# Outbound DNS lookups
+-A OUTPUT -p udp -m udp --dport 53 -j ACCEPT
+
+# Outbound NTP
+-A OUTPUT -p udp --dport 123 --sport 123 -j ACCEPT
+
+# Outbound для ROOT и _APT
+-A OUTPUT -m owner --uid-owner root -j ACCEPT
+-A OUTPUT -m owner --uid-owner _apt -j ACCEPT
+#
+COMMIT
+#

@@ -6,8 +6,8 @@ using templater.Model;
 using templater.Services;
 
 // Установка лицензии Aspose
-var elic = new Aspose.Cells.License();
-elic.SetLicense("aspose.lic");
+new Aspose.Cells.License().SetLicense("aspose.lic");
+new Aspose.Words.License().SetLicense("aspose.lic");
 
 var builder = WebApplication.CreateBuilder(args);
 

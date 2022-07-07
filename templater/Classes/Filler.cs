@@ -59,7 +59,6 @@ namespace templater.Classes
             // заполнить каждый из шаблонов
             foreach (var template in contract.Templates)
             {
-
                 // загрузить файл шаблона
                 _logger.LogDebug("Загрузка шаблона {appRef}/{templateRef}", template.AppApiRef, template.TemplateApiRef);
                 var dbTemplate = _context.Templates
