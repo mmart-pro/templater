@@ -15,7 +15,7 @@
 
 	<Target Name="SetPackageVersion" DependsOnTargets="Publish">
 		<PropertyGroup>
-			<PackageVersion>$([System.DateTime]::Now.ToString("yy.M.d.HHmmss"))</PackageVersion>
+			<PackageVersion>$([System.DateTime]::Now.ToString("yy.M.d.Hmmss"))</PackageVersion>
 		</PropertyGroup>
 	</Target>
 
