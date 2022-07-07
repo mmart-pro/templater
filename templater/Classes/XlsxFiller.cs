@@ -93,7 +93,7 @@ public class XlsxFiller
     /// <summary>
     /// Замена "заголовков" документа XLS
     /// </summary>
-    void FillXlsHeaders(Cells cells, Dictionary<string, object> replacements)
+    void FillXlsHeaders(Cells cells, IDictionary<string, object> replacements)
     {
 #warning вот тут наверное надо собрать новый словарь в lowerCase, тогда FullCell сможет без перебора обходится
         for (var r = cells.MinDataRow; r <= cells.MaxDataRow; r++)
