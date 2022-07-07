@@ -27,24 +27,24 @@ namespace templater.contracts
         /// <summary>
         /// Объекты подстановок
         /// </summary>
-        public Dictionary<string, object> Replacements { get; set; }
+        public IDictionary<string, object> Replacements { get; set; }
 
         /// <summary>
         /// Таблицы для заполнения
         /// </summary>
         public Table[] Tables { get; set; }
 
-        public Template(string appApiRef, string templateId, int copies, KeyValuePair<string, object>[] replacements, params Table[] tables)
+        public Template(string appApiRef, string templateId, int copies, object replacements, params Table[] tables)
         {
             AppApiRef = appApiRef;
             TemplateApiRef = templateId;
             Copies = copies;
-            Replacements = new Dictionary<string, object>(replacements ?? Array.Empty<KeyValuePair<string, object>>());
+            Replacements = (replacements ?? new object()).ToDictionary();
             Tables = tables ?? Array.Empty<Table>();
         }
 
         public Template(string appApiRef, string templateId, int copies = 1)
-            : this(appApiRef, templateId, copies, Array.Empty<KeyValuePair<string, object>>())
+            : this(appApiRef, templateId, copies, new object())
         { }
 
         public Template()

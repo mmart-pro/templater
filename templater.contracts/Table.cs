@@ -25,13 +25,13 @@ namespace templater.contracts
         /// </summary>
         public IDictionary<string, object>[] Rows { get; set; } = Array.Empty<IDictionary<string, object>>();
 
-        public Table(string rowId, bool ignoreZeroes, IEnumerable<dynamic> rows)
+        public Table(string rowId, bool ignoreZeroes, IEnumerable<object> rows)
         {
             RowId = rowId;
             IgnoreZeroes = ignoreZeroes;
             try
             {
-                Rows = rows.Select(x => (IDictionary<string, object>)x).ToArray();
+                Rows = rows.Select(x => x.ToDictionary()).ToArray();
             }
             catch
             {
@@ -39,23 +39,23 @@ namespace templater.contracts
             }
         }
 
-        public Table(string rowId, IEnumerable<dynamic> rows)
+        public Table(string rowId, IEnumerable<object> rows)
             : this(rowId, false, rows)
         {
         }
 
-        public Table(IEnumerable<dynamic> rows)
+        public Table(IEnumerable<object> rows)
             : this("rowNum", false, rows)
         {
         }
 
-        public Table(bool ignoreZeroes, IEnumerable<dynamic> rows)
+        public Table(bool ignoreZeroes, IEnumerable<object> rows)
             : this("rowNum", ignoreZeroes, rows)
         {
         }
 
         public Table()
-            : this(Array.Empty<dynamic>())
+            : this(Array.Empty<object>())
         {
         }
     }
