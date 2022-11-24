@@ -8,6 +8,56 @@
 
 Для перфоманса можно сделать кеш по CRC запроса (с данными) => готовый документ
 
+Надо бы сделать формирование таблички excel на лету в динамике, тогда не будут нужны шаблоны для excel-отчётов в холодильниках, например
+Хорошо работает у printjs
+ someJSONdata = [
+    {
+       name: 'John Doe',
+       email: 'john@doe.com',
+       phone: '111-111-1111'
+    },
+    {
+       name: 'Barry Allen',
+       email: 'barry@flash.com',
+       phone: '222-222-2222'
+    },
+    {
+       name: 'Cool Dude',
+       email: 'cool@dude.com',
+       phone: '333-333-3333'
+    }
+ ]
+ <button type="button" onclick="printJS({printable: someJSONdata, properties: ['name', 'email', 'phone'], type: 'json'})">
+поддреживают переопределение заголовков
+<button type="button" onclick="printJS({
+	    printable: someJSONdata,
+	    properties: [
+		{ field: 'name', displayName: 'Full Name'},
+		{ field: 'email', displayName: 'E-mail'},
+		{ field: 'phone', displayName: 'Phone'}
+	    ],
+	    type: 'json'
+        })">
+    Print with custom table header text
+ </button>
+
+цвета и стили поддерживают
+ <button type="button" onclick="printJS({
+	    printable: someJSONdata,
+	    properties: ['name', 'email', 'phone'],
+	    type: 'json',
+	    gridHeaderStyle: 'color: red;  border: 2px solid #3971A5;',
+	    gridStyle: 'border: 2px solid #3971A5;'
+	})">
+    Print JSON Data
+ </button>
+
 
 Что действительно важно - сжатие json'a.
 Не знаю пока как проверить и поправить, но запрос на devices в холодильниках может быть больше 4Мбайт, что ппц расточительно...
+На самом деле пока это на одном хосте или даже в пределах локалки - пофиг.
+
+А вот авторизация нужна, потому что сейчас получается глазурьпром осталась без документов
+И есть 2 выхода - выпустить templater наружу, либо накатать прокси-контроллер, который будет делать переадресацию
+=> реализовал прокси-контроллер (быстрее)
+Вопрос на подумать: пользователь получает готовый документ по урлу. Как не отдать ему чужой док при подборе урла. Кука?
